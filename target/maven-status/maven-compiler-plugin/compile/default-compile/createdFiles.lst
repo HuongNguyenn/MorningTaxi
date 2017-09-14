@@ -1,0 +1,14 @@
+Providers\WebDriverProvider.class
+Pages\MenuAccountPage.class
+Utils\Utils.class
+Scenarios\TestCase02.class
+Pages\AddNewCustomPage.class
+Pages\LoginPage.class
+Pages\AddNewAccountPage.class
+Pages\RegisteredCustomerPage.class
+Providers\ConstantsProvider.class
+Scenarios\TestCase01.class
+Pages\VerifyAccountPage.class
+Scenarios\TestCase03.class
+Pages\LogoutPage.class
+Pages\MenuCustomPage.class
