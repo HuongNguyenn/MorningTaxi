@@ -13,26 +13,32 @@
         <artifactId>selenium-java</artifactId>
         <version>3.4.0</version>
     </dependency>
-  	
   	<!-- get TestNG -->
   	<dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>6.8.21</version>
     </dependency>
-
 	<dependency>
 		<groupId>org.apache.poi</groupId>
 		<artifactId>poi-ooxml</artifactId>
 		<version>3.8-beta4</version>
 	</dependency>
-	
+	 <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver</artifactId>
+        <version>3.5.0</version>
+    </dependency>
+	<dependency>
+	    <groupId>org.mongodb</groupId>
+	    <artifactId>mongo-java-driver</artifactId>
+	    <version>3.0.0</version>
+	</dependency>
 	<dependency>
 	    <groupId>com.aventstack</groupId>
 	    <artifactId>extentreports</artifactId>
 	    <version>3.0.1</version>
 	</dependency>
-	
     <!-- get jxl to read excel -->
     <dependency>
 		<groupId>net.sourceforge.jexcelapi</groupId>
