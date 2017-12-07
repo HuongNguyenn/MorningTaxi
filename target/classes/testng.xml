@@ -3,7 +3,8 @@
 <suite name="Suite">
   <test name="Test">
     <classes>
-      <class name="Scenarios.TinhGia_VerifyValue"/>
+     <class name="Scenarios.CreateTicket"/>
+     <class name="Scenarios.CreateDriverAccount"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

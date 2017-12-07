@@ -26,44 +26,24 @@ public class WebDriverProvider {
 	public void GoToUrl(String browser) {
 		if ("firefox".equals(browser)) {
 			System.setProperty("webdriver.gecko.driver",
-					new File("src/main/resources/drivers/geckodriver.exe").getAbsolutePath());
+					new File("src/main/resources/Drivers/geckodriver.exe").getAbsolutePath());
 
 			ProfilesIni proIni = new ProfilesIni();
 			FirefoxProfile profileFF = proIni.getProfile("default");
-			wd = new FirefoxDriver(profileFF);
+			wd = new FirefoxDriver();
 
 		} else if ("chrome".equals(browser)) {
 			System.setProperty("webdriver.chrome.driver",
-					new File("src/main/resources/drivers/chromedriver.exe").getAbsolutePath());
+					new File("src/main/resources/Drivers/chromedriver.exe").getAbsolutePath());
 			wd = new ChromeDriver();
 		} else if ("ie".equals(browser)) {
 			System.setProperty("webdriver.ie.driver",
-					new File("src/main/resources/drivers/IEDriverServer.exe").getAbsolutePath());
+					new File("src/main/resources/Drivers/IEDriverServer.exe").getAbsolutePath());
 			wd = new InternetExplorerDriver();
 		}
-		System.setProperty("webdriver.chrome.driver", "E:\\Download\\Appium\\geckodriver\\least_vr\\chromedriver.exe");
-		// Create a new instance of the Firefox driver
-
-		// Put a Implicit wait, this means that any search for elements on the
-		// page could take the time the implicit wait is set for before throwing
-		// exception
 		wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-		// Launch the facebook
 		wd.get("http://morning.taxionline.vn");
-
-		// wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		WaitTimeSecond(5);
-	}
-
-	public void GoToURL(String url) {
-		System.setProperty("webdriver.chrome.driver", "E:\\Download\\Appium\\geckodriver\\least_vr\\chromedriver.exe");
-		wd = new ChromeDriver();
-		wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-		wd.get(url);
-		wd.manage().window().maximize();
-
 	}
 
 	public void exits() {

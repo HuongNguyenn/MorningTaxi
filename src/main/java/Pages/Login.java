@@ -14,6 +14,7 @@ public class Login extends WebDriverProvider {
 	public By loc_Password;
 	public By loc_Login;
 	public By loc_LoginSuccess;
+	public By lob_LoginSuccessWithAdminAccount;
 
 	public Login(WebDriver driver) {
 		this.driver = driver;
@@ -22,6 +23,7 @@ public class Login extends WebDriverProvider {
 		loc_Password = By.xpath(prop.getProperty("LoginPage.Password"));
 		loc_Login = By.xpath(prop.getProperty("LoginPage.LoginButton"));
 		loc_LoginSuccess = By.xpath(prop.getProperty("LoginPage.LoginSuccess"));
+		lob_LoginSuccessWithAdminAccount = By.xpath(prop.getProperty("LoginPage.LoginSuccessWithAdminAccount"));
 	}
 
 	public void LoginMorningTaxi(String userName, String passWord) {
@@ -32,6 +34,10 @@ public class Login extends WebDriverProvider {
 
 	public void VerifyLoginSuccess() {
 		CheckElementExist(loc_LoginSuccess);
+	}
+	
+	public void VerifyLoginSuccessWithAdminAccount() {
+		CheckElementExist(lob_LoginSuccessWithAdminAccount);
 	}
 
 }

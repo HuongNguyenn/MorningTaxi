@@ -13,12 +13,12 @@ public class ConnectDB {
 
 	MongoCollection<Document> collection;
 
-	public ConnectDB() {
+	public ConnectDB(String collection) {
 		MongoClientURI connectionString = new MongoClientURI(
 				"mongodb://morning:morning@morning.taxionline.vn:2411/taxi_dev?3t.uriVersion=2&3t.connection.name=taxidev&3t.connectionMode=direct&readPreference=primary");
 		MongoClient mongoClient = new MongoClient(connectionString);
 		MongoDatabase database = mongoClient.getDatabase("taxi_dev");
-		this.collection = database.getCollection("requests");
+		this.collection = database.getCollection(collection);
 	}
 
 	public String GetPhoneNumber() {
@@ -45,14 +45,29 @@ public class ConnectDB {
 	public void EditStatus(String phone, int status) {
 		collection.updateOne(eq("phone", phone), new Document("$set", new Document("status", status)));
 	}
+	
+	public  boolean CheckEmailIsExits(String email) {
+		Document myDoc = collection.find(eq("email", email)).first();
+		if (myDoc != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public  boolean CheckPhonenumberIsExits(String phone) {
+		Document myDoc = collection.find(eq("phone", phone)).first();
+		if (myDoc != null) {
+			return true;
+		}
+		return false;
+	}
 
 	public static void main(String args[]) {
 		MongoClientURI connectionString = new MongoClientURI(
 				"mongodb://morning:morning@morning.taxionline.vn:2411/taxi_dev?3t.uriVersion=2&3t.connection.name=taxidev&3t.connectionMode=direct&readPreference=primary");
 		MongoClient mongoClient = new MongoClient(connectionString);
 		MongoDatabase database = mongoClient.getDatabase("taxi_dev");
-		MongoCollection<Document> collection = database.getCollection("requests");
-		collection.updateOne(eq("phone", "001828828282"), new Document("$set", new Document("phone", "099999999999")));
+		MongoCollection<Document> collection = database.getCollection("users");
 
-	}
+}
 }

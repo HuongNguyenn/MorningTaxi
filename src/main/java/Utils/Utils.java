@@ -2,7 +2,6 @@ package Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +14,13 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
+import jxl.read.biff.BiffException;
+import jxl.write.Formula;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -23,6 +29,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+
+import Providers.ConstantsProvider;
 
 public class Utils {
 	private HSSFWorkbook wb;
@@ -44,13 +52,13 @@ public class Utils {
 			configProperies.load(in);
 			in.close();
 		} catch (IOException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return configProperies;
 	}
-
-	public static List<HashMap<String, String>> getTestData(String xlFilePath, String sheetName, String tableName) {
+	
+	// Read file
+	public List<HashMap<String, String>> getTestData(String xlFilePath, String sheetName, String tableName) {
 		List<HashMap<String, String>> listData = new ArrayList<HashMap<String, String>>();
 		try {
 			WorkbookSettings ws = new WorkbookSettings();
@@ -84,7 +92,35 @@ public class Utils {
 		}
 		return (listData);
 	}
-
+	
+	public void WriteFileExcel(String pathName, String sheetName, String data, int rownum, int colnum) {
+		Workbook workbook;
+		WritableWorkbook writeWorkbook;
+		try {
+			// open file
+			workbook = Workbook.getWorkbook(new File(pathName));
+			// create file copy of root file to write file
+			writeWorkbook = Workbook.createWorkbook(new File(pathName), workbook);
+			// get sheet to write
+			WritableSheet sheet1 = writeWorkbook.getSheet(sheetName);
+			Formula f = new Formula(colnum, rownum, data);
+			sheet1.addCell(f);
+			writeWorkbook.write();
+			// close
+			writeWorkbook.close();
+		} catch (IOException e) {
+			System.out.println("File not found\n" + e.toString());
+		} catch (RowsExceededException e) {
+			System.out.println("File not found\n" + e.toString());
+		} catch (WriteException e) {
+			System.out.println("File not found\n" + e.toString());
+		} catch (BiffException e) {
+			System.out.println("File not found\n" + e.toString());
+		}
+		System.out.println("open and write success");
+	}
+	
+	// Capture screen
 	public static void captureScreen(WebDriver driver, String testcase, String fileName) {
 		System.out.println("Capture Screenshoot " + fileName);
 		String path;
@@ -99,99 +135,12 @@ public class Utils {
 		try {
 			FileUtils.copyFile(scrFile, new File(filePath));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	//
 
-	// lay ra danh sach cac sheetName
-	public List<String> getAllSheetName(String pathName) throws IOException {
-		File file = new File(pathName);
-		FileInputStream fis = new FileInputStream(file);
-		// tao workbook tro den file excel
-		wb = new HSSFWorkbook(fis);
-		List<String> sheetNames = new ArrayList<String>();
-		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
-			sheetNames.add(wb.getSheetName(i));
-		}
-		return sheetNames;
-	}
-
-	// lay ra tong so hang
-	public int getRowTotal() {
-		return (sheet.getLastRowNum() + 1);
-	}
-
-	// lay ra tong so cot
-	public int getColTotal() {
-		return (sheet.getRow(0).getLastCellNum());
-	}
-
-	// lay gia tri cua mot o
-	public String getCellData(int rownum, int colnum) {
-		String data = null;
-		int t;
-
-		// lay ra 1 hang
-		HSSFRow row = sheet.getRow(rownum);
-		// lay 1 cot tai hang do
-		HSSFCell cell = row.getCell(colnum);
-		if (cell == null) {
-			data = "";
-		} else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
-			t = (int) cell.getNumericCellValue();
-			data = String.valueOf(t);
-		} else {
-			data = cell.getStringCellValue();
-		}
-		return data;
-
-	}
-
-	// doc file->ma tran 2 chieu
-	public String[][] readFile(String pathName, String sheetName) throws Exception {
-
-		File file = new File(pathName);
-		System.out.println("ok");
-		String[][] tabArray = null;
-		try {
-			FileInputStream fis = new FileInputStream(file);
-			System.out.println("ok");
-			wb = new HSSFWorkbook(fis);
-
-			sheet = wb.getSheet(sheetName);
-			System.out.println("ok");
-
-			int rowTotal = getRowTotal();
-			int colTotal = getColTotal();
-
-			tabArray = new String[rowTotal][colTotal];
-
-			for (int i = 0; i < rowTotal; i++) {
-
-				for (int j = 0; j < colTotal; j++) {
-					tabArray[i][j] = getCellData(i, j);
-				}
-			}
-
-		} catch (FileNotFoundException e) {
-
-			System.out.println("#1 getLocator " + e.getMessage());
-
-		} catch (IOException e) {
-
-			System.out.println("#2 getLocator " + e.getMessage());
-
-		}
-		return (tabArray);
-
-	}
-
-	// ghi vao file tai 1 o voi 1 gia tri data
+	// write file
 	public void writeFile(String pathName, String sheetName, String data, int rownum, int colnum) throws Exception {
-		File file = new File(pathName);
-
 		FileInputStream fis = new FileInputStream(pathName);
 		wb = new HSSFWorkbook(fis);
 		sheet = wb.getSheet(sheetName);
@@ -216,5 +165,6 @@ public class Utils {
 		fos.close();
 
 	}
+	
 
 }

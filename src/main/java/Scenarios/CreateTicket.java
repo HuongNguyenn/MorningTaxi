@@ -49,7 +49,7 @@ public class CreateTicket extends WebDriverProvider {
 	public void TestRunner() throws Exception {
 		Login login = new Login(wd);
 		List<HashMap<String, String>> listData = utils.getTestData(ConstantsProvider.pathFile,
-				ConstantsProvider.sheetName, ConstantsProvider.tableName);
+				ConstantsProvider.sheetName1, ConstantsProvider.tableName);
 		for (int i = 0; i < listData.size(); i++) {
 			try {
 
@@ -57,45 +57,45 @@ public class CreateTicket extends WebDriverProvider {
 				GoToUrl(ConstantsProvider.Firefox);
 
 				// Login
-				login.LoginMorningTaxi(ConstantsProvider.userName, ConstantsProvider.passWord);
+				login.LoginMorningTaxi(ConstantsProvider.userName1, ConstantsProvider.passWord1);
 				login.VerifyLoginSuccess();
 
 				// Tao chuyen moidieu
-				control.DieuXe(listData.get(i).get("TenKhachHang"), listData.get(i).get("SoDienThoai"),
-						listData.get(i).get("LoaiXe"), listData.get(i).get("DiemDon"), listData.get(i).get("GhiChu"));
+				control.BookTicket(listData.get(i).get("Name"), listData.get(i).get("Phonenumber"),
+						listData.get(i).get("Type"), listData.get(i).get("Address"), listData.get(i).get("Note"));
 
 				// Verify tao chuyen thanh cong
-				control.VerifyCreateTicketSuccess(listData.get(i).get("SoDienThoai"));
+				control.VerifyCreateTicketSuccess(listData.get(i).get("Phonenumber"));
 
 				// Verify data in database
-				control.VerifyDataOfTicketInDB(listData.get(i).get("SoDienThoai"));
+				control.VerifyDataOfTicketInDB(listData.get(i).get("Phonenumber"));
 
 				// Verify trang thai Dang cho
 				control.VerifyStatus("Đang chờ");
 
 				// Thay doi trang thai cua chuyen -> Dang don
-				control.ChanngeStatus(listData.get(i).get("SoDienThoai"), 2);
+				control.ChanngeStatus(listData.get(i).get("Phonenumber"), 2);
 
 				// Refresh trang
-				control.RefreshDieuXePage();
+				control.RefreshControlPage();
 
 				// Verify trang thai Dang don
 				control.VerifyStatus("Đang đón");
 
 				// Thay doi trang thai cua chuyen -> Tong dai moi khach
-				control.ChanngeStatus(listData.get(i).get("SoDienThoai"), 9);
+				control.ChanngeStatus(listData.get(i).get("Phonenumber"), 9);
 
 				// Refresh trang
-				control.RefreshDieuXePage();
+				control.RefreshControlPage();
 
 				// Verify trang thai Tong dai moi khach
 				control.VerifyStatus("Tổng đài mời khách");
 
 				// Thay doi trang thai cua chuyen -> Co khach
-				control.ChanngeStatus(listData.get(i).get("SoDienThoai"), 3);
+				control.ChanngeStatus(listData.get(i).get("Phonenumber"), 3);
 
 				// Refresh trang
-				control.RefreshDieuXePage();
+				control.RefreshControlPage();
 
 				// Refresh trang
 				control.GotoSucessTab();
@@ -103,18 +103,18 @@ public class CreateTicket extends WebDriverProvider {
 				// Verify trang thai Tong dai moi khach
 				control.VerifyStatus("Có khách");
 
-				// Delete data
-				control.DeleteTicket(listData.get(i).get("SoDienThoai"));
-
 				// Ghi ket qua tren file excel
-				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName, ConstantsProvider.result_pass,
+				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName1, ConstantsProvider.result_pass,
 						i + 2, 7);
 
 			} catch (Exception e) {
+				// Delete data
+				control.DeleteTicket(listData.get(i).get("Phonenumber"));
 				// Ghi ket qua tren file excel
-				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName, ConstantsProvider.result_false,
+				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName1, ConstantsProvider.result_false,
 						i + 2, 7);
 			}
+			control.exits();
 		}
 	}
 

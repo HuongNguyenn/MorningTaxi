@@ -19,136 +19,129 @@ import Utils.Utils;
 public class Control extends WebDriverProvider {
 
 	public WebDriver driver;
-	public By loc_taoChuyenMoi;
-	public By loc_bangDieuXe;
-	public By loc_khachHang;
-	public By loc_soDienThoai;
-	public By loc_loaiXe;
-	public By loc_diemDon;
-	public By loc_ghiChu;
-	public By loc_datChuyen;
-	public By loc_diemDenFocused;
-	public By loc_phonenumber;
-	public By loc_statues;
-	public By loc_statuesSuccess;
-	public By loc_successTab;
+	public By loc_CreateTicket;
+	public By loc_ControlTable;
+	public By loc_NameInput;
+	public By loc_PhoneNumberInput;
+	public By loc_TypeInput;
+	public By loc_Address;
+	public By loc_Note;
+	public By loc_BookTicket;
+	public By loc_AddressFocused;
+	public By loc_Phonenumber;
+	public By loc_Statues;
+	public By loc_StatuesSuccess;
+	public By loc_SuccessTab;
 
 	public String result_TestCase;
-	ConnectDB connect = new ConnectDB();
+	String collection = "requests";
+	ConnectDB connect = new ConnectDB(collection);
 
 	public Control(WebDriver driver) {
 		// TODO Auto-generated constructor stub
 		this.driver = driver;
-		Properties prop = Utils.loadProperties("ObjectRepo/DieuXePage.properties");
-		loc_taoChuyenMoi = By.xpath(prop.getProperty("DieuXePage.TaoChuyenMoi"));
-		loc_bangDieuXe = By.xpath(prop.getProperty("DieuXePage.BangDieuXe"));
-		loc_khachHang = By.xpath(prop.getProperty("DieuXePage.TenKhachHang"));
-		loc_soDienThoai = By.xpath(prop.getProperty("DieuXePage.SoDienThoai"));
-		loc_loaiXe = By.xpath(prop.getProperty("DieuXePage.LoaiXe"));
-		loc_diemDon = By.xpath(prop.getProperty("DieuXePage.DiemDon"));
-		loc_ghiChu = By.xpath(prop.getProperty("DieuXePage.GhiChu"));
-		loc_datChuyen = By.xpath(prop.getProperty("DieuXePage.DatChuyen"));
-		loc_diemDenFocused = By.xpath(prop.getProperty("DieuXePage.DiemDenFocused"));
-		loc_phonenumber = By.xpath(prop.getProperty("DieuXePage.PhoneNumber"));
-		loc_statues = By.xpath(prop.getProperty("DieuXePage.Statues"));
-		loc_statuesSuccess = By.xpath(prop.getProperty("DieuXePage.StatuesSuccess"));
-		loc_successTab = By.xpath(prop.getProperty("DieuXePage.SuccessTab"));
+		Properties prop = Utils.loadProperties("ObjectRepo/ControlPage.properties");
+		loc_CreateTicket = By.xpath(prop.getProperty("ControlPage.CreateTicket"));
+		loc_ControlTable = By.xpath(prop.getProperty("ControlPage.ControlTable"));
+		loc_NameInput = By.xpath(prop.getProperty("ControlPage.NameInput"));
+		loc_PhoneNumberInput = By.xpath(prop.getProperty("ControlPage.PhoneNumberInput"));
+		loc_TypeInput = By.xpath(prop.getProperty("ControlPage.TypeInput"));
+		loc_Address = By.xpath(prop.getProperty("ControlPage.Address"));
+		loc_Note = By.xpath(prop.getProperty("ControlPage.Note"));
+		loc_BookTicket = By.xpath(prop.getProperty("ControlPage.BookTicket"));
+		loc_AddressFocused = By.xpath(prop.getProperty("ControlPage.AddressFocused"));
+		loc_Phonenumber = By.xpath(prop.getProperty("ControlPage.PhoneNumber"));
+		loc_Statues = By.xpath(prop.getProperty("ControlPage.Statues"));
+		loc_StatuesSuccess = By.xpath(prop.getProperty("ControlPage.StatuesSuccess"));
+		loc_SuccessTab = By.xpath(prop.getProperty("ControlPage.SuccessTab"));
 	}
 
-	public void TaoChuyenMoi() {
-		ClickElement(loc_taoChuyenMoi);
+	public void CreateTicket() {
+		ClickElement(loc_CreateTicket);
 	}
 
-	public void NhapSoDienThoai(String value) {
-		try {
-			long soDienThoai = Long.parseLong(value);
-			EnterText(loc_soDienThoai, value);
-		} catch (Exception e) {
-			System.out.println("");
-		}
+	public void EnterPhonenumber(String value) {
+		EnterText(loc_PhoneNumberInput, value);
 	}
 
-	public void NhapKhachHang(String value) {
-		EnterText(loc_khachHang, value);
+	public void EnterName(String value) {
+		EnterText(loc_NameInput, value);
 	}
 
-	public void ChonLoaiXe(String value) {
-		try {
+	public void SelectType(String value) {
+	
 			int loaiXe = Integer.parseInt(value);
 			if (loaiXe < 0 && loaiXe > 3) {
 				loaiXe = 0;
 			}
-			SelectDropdownByIndex(loc_loaiXe, value);
-
-		} catch (Exception e) {
-			System.out.println("Data is not correct...");
-		}
+			SelectDropdownByIndex(loc_TypeInput, value);
 
 	}
 
-	public void ChonDiemDon(String diemDon) {
-		EnterText(loc_diemDon, diemDon);
-		ClickElement(loc_diemDenFocused);
+	public void EnterAddress(String diemDon) {
+		EnterText(loc_Address, diemDon);
+		ClickElement(loc_AddressFocused);
 	}
 
-	public void NhapGhiChu(String value) {
-		EnterText(loc_ghiChu, value);
+	public void EnterNotes(String value) {
+		EnterText(loc_Note, value);
 	}
 
-	public void ClickNutDatChuyen() {
-		ClickElement(loc_datChuyen);
+	public void ClickBookTicketButton() {
+		ClickElement(loc_BookTicket);
 	}
 
-	public void DieuXe(String tenKhachHang, String soDienThoai, String loaiXe, String diemDon, String ghiChu) {
-		TaoChuyenMoi();
-		NhapKhachHang(tenKhachHang);
-		NhapSoDienThoai(soDienThoai);
-		ChonLoaiXe(loaiXe);
-		ChonDiemDon(diemDon);
-		NhapGhiChu(ghiChu);
-		ClickNutDatChuyen();
+	public void BookTicket(String tenKhachHang, String soDienThoai, String loaiXe, String diemDon, String ghiChu) {
+		CreateTicket();
+		EnterName(tenKhachHang);
+		EnterPhonenumber(soDienThoai);
+		SelectType(loaiXe);
+		EnterAddress(diemDon);
+		EnterNotes(ghiChu);
+		ClickBookTicketButton();
 
 	}
 
 	public void VerifyCreateTicketSuccess(String value) {
 		WaitTimeSecond(5);
-		CheckElementExist(loc_phonenumber);
-		String actual = GetText(loc_phonenumber);
+		CheckElementExist(loc_Phonenumber);
+		String actual = GetText(loc_Phonenumber);
 		System.out.println(actual);
 		String failureText = "Create data is failed....";
 		Assert.assertEquals(failureText, value, actual);
 	}
 
 	public void VerifyDataOfTicketInDB(String value) {
-		CheckElementExist(loc_phonenumber);
-		ConnectDB db = new ConnectDB();
-		String actual = db.GetPhoneNumber();
+		CheckElementExist(loc_Phonenumber);
+		String actual = connect.GetPhoneNumber();
 		String failureText = "Data of Ticket is not exits....";
 		Assert.assertEquals(failureText, value, actual);
 	}
 
 	public void DeleteTicket(String numberphone) {
-		connect.DeleteData(numberphone);
+		if (connect.CheckPhonenumberIsExits(numberphone)) {
+			connect.DeleteData(numberphone);
+		}
 	}
 
 	public void ChanngeStatus(String phone, int status) {
 		connect.EditStatus(phone, status);
-		WaitTimeSecond(5);
+		WaitTimeSecond(10);
 	}
 
-	public void RefreshDieuXePage() {
+	public void RefreshControlPage() {
 		RefreshPage();
 	}
 
 	public void GotoSucessTab() {
-		ClickElement(loc_successTab);
+		ClickElement(loc_SuccessTab);
 	}
 
 	public void VerifyStatus(String value) {
-		ValidateFieldContainsText(loc_statues, value);
+		ValidateFieldContainsText(loc_Statues, value);
 	}
 
 	public void VerifyStatusSuccess(String value) {
-		ValidateFieldContainsText(loc_statuesSuccess, value);
+		ValidateFieldContainsText(loc_StatuesSuccess, value);
 	}
 }
