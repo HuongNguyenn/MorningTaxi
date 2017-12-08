@@ -58,7 +58,7 @@ public class Utils {
 	}
 	
 	// Read file
-	public List<HashMap<String, String>> getTestData(String xlFilePath, String sheetName, String tableName) {
+	public List<HashMap<String, String>> GetTestData(String xlFilePath, String sheetName, String tableName) {
 		List<HashMap<String, String>> listData = new ArrayList<HashMap<String, String>>();
 		try {
 			WorkbookSettings ws = new WorkbookSettings();

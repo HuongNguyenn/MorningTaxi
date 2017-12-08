@@ -32,6 +32,7 @@ public class Control extends WebDriverProvider {
 	public By loc_Statues;
 	public By loc_StatuesSuccess;
 	public By loc_SuccessTab;
+	public By loc_NoticeAdrressIncorrect;
 
 	public String result_TestCase;
 	String collection = "requests";
@@ -54,6 +55,7 @@ public class Control extends WebDriverProvider {
 		loc_Statues = By.xpath(prop.getProperty("ControlPage.Statues"));
 		loc_StatuesSuccess = By.xpath(prop.getProperty("ControlPage.StatuesSuccess"));
 		loc_SuccessTab = By.xpath(prop.getProperty("ControlPage.SuccessTab"));
+		loc_NoticeAdrressIncorrect = By.xpath(prop.getProperty("ControlPage.NoticeAdrressIncorrect"));
 	}
 
 	public void CreateTicket() {
@@ -99,7 +101,6 @@ public class Control extends WebDriverProvider {
 		EnterAddress(diemDon);
 		EnterNotes(ghiChu);
 		ClickBookTicketButton();
-
 	}
 
 	public void VerifyCreateTicketSuccess(String value) {
@@ -114,6 +115,7 @@ public class Control extends WebDriverProvider {
 	public void VerifyDataOfTicketInDB(String value) {
 		CheckElementExist(loc_Phonenumber);
 		String actual = connect.GetPhoneNumber();
+		System.out.println("Verify the created ticket is saved in database");
 		String failureText = "Data of Ticket is not exits....";
 		Assert.assertEquals(failureText, value, actual);
 	}
@@ -133,7 +135,7 @@ public class Control extends WebDriverProvider {
 		RefreshPage();
 	}
 
-	public void GotoSucessTab() {
+	public void GotoSuccessTab() {
 		ClickElement(loc_SuccessTab);
 	}
 
@@ -144,4 +146,10 @@ public class Control extends WebDriverProvider {
 	public void VerifyStatusSuccess(String value) {
 		ValidateFieldContainsText(loc_StatuesSuccess, value);
 	}
+	
+	public void VerifyAddressIncorrect(){
+		CheckElementExist(loc_NoticeAdrressIncorrect);
+	}
+
+	
 }

@@ -48,7 +48,7 @@ public class CreateDriverAccount extends WebDriverProvider {
 	@Test
 	public void TestRunner() throws Exception {
 		Login login = new Login(wd);
-		List<HashMap<String, String>> listData = utils.getTestData(ConstantsProvider.pathFile,
+		List<HashMap<String, String>> listData = utils.GetTestData(ConstantsProvider.pathFile,
 				ConstantsProvider.sheetName2, ConstantsProvider.tableName);
 		for (int i = 0; i < listData.size(); i++) {
 			try {

@@ -9,7 +9,7 @@ public class ConstantsProvider {
 	public static final String passWord1 = "123456";
 	public static final String userName2 = "admin";
 	public static final String passWord2 = "123456";
-	public static final String pathFile = "./src/main/resources/DataTest/CreateDriver.xls";
+	public static final String pathFile = "./src/main/resources/DataTest/CreateTicket.xls";
 	public static final String sheetName1 = "Create_Ticket";
 	public static final String sheetName2 = "Create_DriverAccount";
 	public static final String tableName = "Data Test";
