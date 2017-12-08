@@ -137,6 +137,7 @@ public class CreateTicket extends WebDriverProvider {
 						i + 2, 7);
 			}
 			// Delete data
+			
 			control.DeleteTicket(listData.get(i).get("Phonenumber"));
 			control.exits();
 		}
