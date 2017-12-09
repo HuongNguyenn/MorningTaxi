@@ -52,7 +52,7 @@ public class CreateTicket extends WebDriverProvider {
 	@Test
 	public void TestRunner() throws Exception {
 		Login login = new Login(wd);
-		List<HashMap<String, String>> listData = utils.GetTestData(ConstantsProvider.pathFile,
+		List<HashMap<String, String>> listData = utils.GetTestData(ConstantsProvider.pathFile1,
 				ConstantsProvider.sheetName1, ConstantsProvider.tableName);
 		for (int i = 0; i < listData.size(); i++) {
 			try {
@@ -129,11 +129,11 @@ public class CreateTicket extends WebDriverProvider {
 					control.VerifyStatusSuccess("Trả khách");
 				}
 				// Ghi ket qua tren file excel
-				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName1, ConstantsProvider.result_pass,
+				utils.writeFile(ConstantsProvider.pathFile1, ConstantsProvider.sheetName1, ConstantsProvider.result_pass,
 						i + 2, 7);
 			} catch (Exception e) {
 				// Ghi ket qua tren file excel
-				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName1, ConstantsProvider.result_false,
+				utils.writeFile(ConstantsProvider.pathFile1, ConstantsProvider.sheetName1, ConstantsProvider.result_false,
 						i + 2, 7);
 			}
 			// Delete data

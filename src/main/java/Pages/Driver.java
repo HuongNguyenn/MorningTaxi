@@ -1,5 +1,6 @@
 package Pages;
 
+import org.testng.AssertJUnit;
 import java.net.Inet4Address;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -10,7 +11,8 @@ import org.openqa.selenium.WebDriver;
 import Providers.ConnectDB;
 import Providers.WebDriverProvider;
 import Utils.Utils;
-import junit.framework.Assert;
+import java.util.regex.Matcher; 
+import java.util.regex.Pattern;
 
 public class Driver extends WebDriverProvider {
 
@@ -75,11 +77,13 @@ public class Driver extends WebDriverProvider {
 		EnterPassword(password);
 		EnterEmail(email);
 		ClickSaveButton();
+		WaitTimeSecond(5);
 	}
 	
 	public void VerifyInformation(String phonenumber, String name, String email, String password){
 		if (phonenumber==null || name==null || email==null || password ==null 
-				|| IsValidPhonenumber(phonenumber)==false || IsValidName(name)==false || IsValidEmail(email)==false) {
+				|| IsValidPhonenumber(phonenumber)==false || IsValidName(name)==false || IsValidEmail(email)==false 
+				|| IsSpecialCharacterInPassword(password) || IsValidPassword(password)==false	) {
 			CheckElementExist(loc_IncorrectNotice);
 			
 		} else if (IsExitsPhonenumber(phonenumber)== true || IsExitsEmail(email)== true ) {
@@ -106,6 +110,24 @@ public class Driver extends WebDriverProvider {
 		}
 		return true;
 	
+	}
+	public boolean IsValidPassword(String name){
+		int size = name.length();
+		if (size<5) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean IsSpecialCharacterInPassword(String name){
+		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(name);
+		boolean b = m.find();
+
+		if (b){
+			return true;
+		}
+		 return false;
 	}
 	
 	public  boolean IsValidEmail(String email){
@@ -137,6 +159,12 @@ public class Driver extends WebDriverProvider {
 	public void VerifyDriverAccountInTable(String phonenumber) {
 		String actual = GetText(loc_FirstPhonenumber);
 		String message = "Information is not in table..............";
-		Assert.assertEquals(message, phonenumber, actual);
+		AssertJUnit.assertEquals(message, phonenumber, actual);
+	}
+	
+	public void DeleteDriver(String email){
+		if (connect.CheckEmailIsExits(email)) {
+			connect.DeleteDriver(email);
+		}
 	}
 }

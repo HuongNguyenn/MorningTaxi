@@ -61,6 +61,11 @@ public class ConnectDB {
 		}
 		return false;
 	}
+	
+	public void DeleteDriver(String email) {
+		collection.deleteMany(eq("email", email));
+	}
+
 
 	public static void main(String args[]) {
 		MongoClientURI connectionString = new MongoClientURI(

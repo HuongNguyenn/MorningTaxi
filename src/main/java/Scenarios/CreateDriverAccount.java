@@ -48,7 +48,7 @@ public class CreateDriverAccount extends WebDriverProvider {
 	@Test
 	public void TestRunner() throws Exception {
 		Login login = new Login(wd);
-		List<HashMap<String, String>> listData = utils.GetTestData(ConstantsProvider.pathFile,
+		List<HashMap<String, String>> listData = utils.GetTestData(ConstantsProvider.pathFile2,
 				ConstantsProvider.sheetName2, ConstantsProvider.tableName);
 		for (int i = 0; i < listData.size(); i++) {
 			try {
@@ -61,13 +61,14 @@ public class CreateDriverAccount extends WebDriverProvider {
 				login.VerifyLoginSuccessWithAdminAccount();
 				driver.CreateDriverAccount(listData.get(i).get("Phonenumber"), listData.get(i).get("Name"), listData.get(i).get("Email"), listData.get(i).get("Password"));
 				driver.VerifyInformation(listData.get(i).get("Phonenumber"), listData.get(i).get("Name"), listData.get(i).get("Email"), listData.get(i).get("Password"));
-				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName2, ConstantsProvider.result_pass,
+				utils.writeFile(ConstantsProvider.pathFile2, ConstantsProvider.sheetName2, ConstantsProvider.result_pass,
 						i + 2, 6);
 			} catch (Exception e) {
 				// Ghi ket qua tren file excel
-				utils.writeFile(ConstantsProvider.pathFile, ConstantsProvider.sheetName2, ConstantsProvider.result_false,
+				utils.writeFile(ConstantsProvider.pathFile2, ConstantsProvider.sheetName2, ConstantsProvider.result_false,
 						i + 2, 6);
 			}
+			driver.DeleteDriver(listData.get(i).get("Email"));
 			driver.exits();
 		}
 	}
