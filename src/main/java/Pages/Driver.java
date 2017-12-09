@@ -83,7 +83,7 @@ public class Driver extends WebDriverProvider {
 	public void VerifyInformation(String phonenumber, String name, String email, String password){
 		if (phonenumber==null || name==null || email==null || password ==null 
 				|| IsValidPhonenumber(phonenumber)==false || IsValidName(name)==false || IsValidEmail(email)==false 
-				|| IsSpecialCharacterInPassword(password) || IsValidPassword(password)==false	) {
+				|| IsSpecialCharacterInPassword(password) || IsValidPassword(password)==false ||IsValidPhone(phonenumber)==false) {
 			CheckElementExist(loc_IncorrectNotice);
 			
 		} else if (IsExitsPhonenumber(phonenumber)== true || IsExitsEmail(email)== true ) {
@@ -103,6 +103,14 @@ public class Driver extends WebDriverProvider {
 		}
 	}
 	
+	public boolean IsValidPhone(String phonenumber){
+		int size = phonenumber.length();
+		if (size>8 && size<16) {
+			return true;
+		}
+		return false;
+	
+	}
 	public boolean IsValidName(String name){
 		int size = name.length();
 		if (size<6) {
