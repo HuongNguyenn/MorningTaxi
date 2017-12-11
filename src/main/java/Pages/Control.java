@@ -71,13 +71,16 @@ public class Control extends WebDriverProvider {
 	}
 
 	public void SelectType(String value) {
-	
-			int loaiXe = Integer.parseInt(value);
+		int loaiXe;
+		if (value == "") {
+			loaiXe = 0;
+		} else {
+			loaiXe = Integer.parseInt(value);
 			if (loaiXe < 0 && loaiXe > 3) {
 				loaiXe = 0;
 			}
 			SelectDropdownByIndex(loc_TypeInput, value);
-
+		}
 	}
 
 	public void EnterAddress(String diemDon) {
