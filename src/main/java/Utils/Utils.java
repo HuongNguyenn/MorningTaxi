@@ -82,6 +82,7 @@ public class Utils {
 							sheet.getCell(j, i).getContents().trim());
 				}
 				listData.add(valSet);
+				
 			}
 
 		} catch (NullPointerException ne) {
@@ -136,7 +137,6 @@ public class Utils {
 			FileUtils.copyFile(scrFile, new File(filePath));
 		} catch (IOException e) {
 			e.printStackTrace();
-			
 		}
 	}
 
