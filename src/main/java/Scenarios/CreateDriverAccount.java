@@ -52,12 +52,11 @@ public class CreateDriverAccount extends WebDriverProvider {
 				ConstantsProvider.sheetName2, ConstantsProvider.tableName);
 		for (int i = 0; i < listData.size(); i++) {
 			try {
-
 				// Go to website
 				GoToUrl(ConstantsProvider.Firefox);
-
 				// Login
 				login.LoginMorningTaxi(ConstantsProvider.userName2, ConstantsProvider.passWord2);
+				
 				login.VerifyLoginSuccessWithAdminAccount();
 				driver.CreateDriverAccount(listData.get(i).get("Phonenumber"), listData.get(i).get("Name"), listData.get(i).get("Email"), listData.get(i).get("Password"));
 				driver.VerifyInformation(listData.get(i).get("Phonenumber"), listData.get(i).get("Name"), listData.get(i).get("Email"), listData.get(i).get("Password"));
